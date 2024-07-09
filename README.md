@@ -8,7 +8,7 @@ Este repositório contém a solução para o Desafio de Ciência de Dados da Lig
   - `EDA_and_analysis.ipynb`: Análise exploratória dos dados e respostas às perguntas do desafio.
   - `modeling_and_prediction.ipynb`: Códigos de modelagem e previsão da nota do IMDB.
 - `data/`
-  - `movies_data.csv`: Base de dados utilizada (você precisa substituir com seu arquivo real).
+  - `desafio_indicium_imdb.csv`: Base de dados utilizada (você precisa substituir com seu arquivo real).
 - `models/`
   - `imdb_rating_model.pkl`: Modelo treinado salvo.
 - `requirements.txt`: Lista de pacotes necessários para executar o projeto.
