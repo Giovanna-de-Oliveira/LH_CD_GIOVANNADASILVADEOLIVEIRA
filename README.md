@@ -75,15 +75,44 @@ Para executar o projeto localmente, siga os passos abaixo:
 Para prever a nota do IMDB para um filme específico, utilize o modelo salvo (`imdb_rating_model.pkl`). Exemplo de uso no Python:
 
 ```python
-import numpy as np
-import pickle
-
 # Características do filme "The Shawshank Redemption"
-shawshank_features = np.array([[1994, 80.0, 2343110]])
+
+Predicted_Film = {'Series_Title': 'The Shawshank Redemption',
+ 'Released_Year': '1994',
+ 'Certificate': 'A',
+ 'Runtime': '142 min',
+ 'Genre': 'Drama',
+ 'Overview': 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
+ 'Meta_score': 80.0,
+ 'Director': 'Frank Darabont',
+ 'Star1': 'Tim Robbins',
+ 'Star2': 'Morgan Freeman',
+ 'Star3': 'Bob Gunton',
+ 'Star4': 'William Sadler',
+ 'No_of_Votes': 2343110,
+ 'Gross': '28,341,469'}
+
+
+Predicted_Film['Meta_score'] = pd.to_numeric(Predicted_Film['Meta_score'])
+Predicted_Film['No_of_Votes'] = pd.to_numeric(Predicted_Film['No_of_Votes'])
+
+Predicted_Film['Runtime'] = Predicted_Film['Runtime'].replace(" min", "")
+Predicted_Film['Runtime'] = pd.to_numeric(Predicted_Film['Runtime'])
+
+Predicted_Film['Gross'] = Predicted_Film['Gross'].replace(",", "")
+Predicted_Film['Gross'] = pd.to_numeric(Predicted_Film['Gross'])
+
+shawshank_features = np.array([Predicted_Film['Meta_score'], Predicted_Film['No_of_Votes'], Predicted_Film['Runtime'], Predicted_Film['Gross']])
+shawshank_features = shawshank_features.reshape(1, -1)
+
 
 # Carregar o modelo salvo
-with open('models/imdb_rating_model.pkl', 'rb') as f:
+with open('imdb_rating_model.pkl', 'rb') as f:
     loaded_model = pickle.load(f)
+
+# Fazer a previsão
+shawshank_rating_pred = loaded_model.predict(shawshank_features)
+print(f"A nota prevista para o filme 'The Shawshank Redemption' é: {shawshank_rating_pred[0]}")
 
 # Fazer a previsão
 shawshank_rating_pred = loaded_model.predict(shawshank_features)
